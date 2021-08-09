@@ -1,0 +1,9 @@
+{
+  "label": "git example package",
+  "project": "git-example",
+  "branch": "dev",
+  "deployType": "git",
+  "deployTarget": {
+    "path": "/home/git-example"
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "label": "k8s example package",
+  "project": "k8s-example",
+  "branch": "dev",
+  "deployType": "k8s",
+  "deployTarget": {
+    "namespace": "default",
+    "resourceType": "Deployment",
+    "resourceName": "test_deployment",
+    "container": "test_container"
+  }
+}
