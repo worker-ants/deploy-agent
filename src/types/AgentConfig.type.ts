@@ -1,5 +1,5 @@
 export type AgentConfigType = {
-  async: boolean;
+  concurrency: number;
   delay: number;
   packagePath: string;
   metadata: MetadataConfigType;

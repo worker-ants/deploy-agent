@@ -6,16 +6,20 @@ export async function getPackages(packagePath: string): Promise<PackageType[]> {
   const packages: PackageType[] = [];
 
   const promises = files.map(async (file) => {
-    if (file.match(/\.json$/i) === null) return;
+    try {
+      if (file.match(/\.json$/i) === null) return;
 
-    const packageItem: PackageType = JSON.parse(
-      await readFile(`${packagePath}/${file}`, {
-        encoding: 'utf8',
-      }),
-    );
+      const packageItem: PackageType = JSON.parse(
+        await readFile(`${packagePath}/${file}`, {
+          encoding: 'utf8',
+        }),
+      );
 
-    packages.push(packageItem);
-    console.info(`package: ${file}`);
+      packages.push(packageItem);
+      console.info(`package: ${file}`);
+    } catch (e) {
+      console.error(e);
+    }
   });
 
   await Promise.allSettled(promises).catch((e) => {

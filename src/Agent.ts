@@ -4,31 +4,54 @@ import { getPackages } from './lib/Packages';
 
 export class Agent {
   private config: AgentConfigType;
-  private packages: PackageType[] | undefined;
+  private waitingPackages: PackageType[];
 
   constructor(config: AgentConfigType) {
     this.config = config;
+    this.waitingPackages = [];
   }
 
   public async main(): Promise<void> {
     console.log('deploy agent - initialize');
 
-    this.packages = await getPackages(this.config.packagePath);
+    this.waitingPackages = await getPackages(this.config.packagePath);
 
-    if (this.config.async) {
-      this.packages.map(async (packageItem: PackageType) => {
-        while (Infinity) {
-          await Agent.process(packageItem);
-          await this.delay(this.config.delay);
-        }
-      });
-    } else {
-      while (Infinity) {
-        for (let i = 0; i < this.packages.length; i++) {
-          await Agent.process(this.packages[i]);
-          await this.delay(this.config.delay);
+    const concurrency = this.getConcurrency();
+    const promises: Promise<void>[] = [];
+
+    for (let i = 0; i < concurrency; i++) {
+      promises.push(this.worker());
+    }
+    await Promise.allSettled(promises);
+  }
+
+  private getConcurrency(): number {
+    const concurrency =
+      this.config.concurrency !== null
+        ? this.config.concurrency
+        : this.waitingPackages.length;
+
+    Math.min(concurrency, this.waitingPackages.length);
+    return concurrency;
+  }
+
+  private async worker(): Promise<void> {
+    while (Infinity) {
+      if (this.waitingPackages.length < 1) break;
+
+      const packageItem = this.waitingPackages.shift();
+
+      if (packageItem === undefined) {
+        if (this.waitingPackages.length > 0) {
+          continue;
+        } else {
+          break;
         }
       }
+
+      await Agent.process(packageItem);
+      this.waitingPackages.push(packageItem);
+      await this.delay(this.config.delay);
     }
   }
 
