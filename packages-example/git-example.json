@@ -4,6 +4,7 @@
   "branch": "dev",
   "deployType": "git",
   "deployTarget": {
-    "path": "/home/git-example"
+    "path": "/home/git-example",
+    "branch": "master"
   }
 }

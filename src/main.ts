@@ -1,6 +1,11 @@
+// common package
 import consoleStamp from 'console-stamp';
-import { agentConfig } from './config';
-import { Agent } from './Agent';
+import * as dotenv from 'dotenv';
+dotenv.config({ encoding: 'utf8' });
+
+// app package
+import { agentConfig } from './config/agent.config';
+import { Agent } from './controller/Agent';
 
 consoleStamp(console, {
   format: ':date(yyyy-mm-dd HH:MM:ss.l)',

@@ -7,6 +7,7 @@
     "namespace": "default",
     "resourceType": "Deployment",
     "resourceName": "test_deployment",
-    "container": "test_container"
+    "container": "test_container",
+    "image": "test_image"
   }
 }

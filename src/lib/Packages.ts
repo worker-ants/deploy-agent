@@ -1,15 +1,17 @@
-import { PackageType } from '../types/Package.type';
+import { PackageDataType } from '../types/PackageData.type';
 import { readdir, readFile } from 'fs/promises';
 
-export async function getPackages(packagePath: string): Promise<PackageType[]> {
+export async function getPackages(
+  packagePath: string,
+): Promise<PackageDataType[]> {
   const files: Array<string> = await readdir(packagePath);
-  const packages: PackageType[] = [];
+  const packages: PackageDataType[] = [];
 
   const promises = files.map(async (file) => {
     try {
       if (file.match(/\.json$/i) === null) return;
 
-      const packageItem: PackageType = JSON.parse(
+      const packageItem: PackageDataType = JSON.parse(
         await readFile(`${packagePath}/${file}`, {
           encoding: 'utf8',
         }),

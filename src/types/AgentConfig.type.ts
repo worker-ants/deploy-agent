@@ -1,4 +1,5 @@
 export type AgentConfigType = {
+  serverName: string;
   concurrency: number;
   delay: number;
   packagePath: string;
