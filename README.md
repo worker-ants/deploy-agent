@@ -1,9 +1,13 @@
 # Deploy Agent
-sync local revision to metadata
+sync local revision using metadata server
 
 ## Required
-- git: 1.8.5 higher
-- k8s: kubectl with default credential
+- metadata server
+  - request: GET `http(s)://${HOST}/${PATH}/${project}/${branch}`
+  - response: json (@see `src/types/Metadata.type.ts`)
+- deploy provider
+  - git: 1.8.5 higher (using `-C` option)
+  - k8s: kubectl with default credential
 
 ## configure
 - agent env: see `src/agent.config.ts`
@@ -24,7 +28,7 @@ sync local revision to metadata
   - metadata: deploy metadata in the build server
   - revision: revision data
 
-body example
+### request body example
 ```json
 {
   "serverName": "test-server-1",
