@@ -2,7 +2,7 @@
 sync local revision to metadata
 
 ## Required
-= git: 1.8.5 higher
+- git: 1.8.5 higher
 - k8s: kubectl with default credential
 
 ## configure
