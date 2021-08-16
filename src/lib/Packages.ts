@@ -18,7 +18,7 @@ export async function getPackages(
       );
 
       packages.push(packageItem);
-      console.info(`package: ${file}`);
+      console.info(`package: ${file}`, packageItem);
     } catch (e) {
       console.error(e);
     }

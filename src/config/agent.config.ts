@@ -11,12 +11,12 @@ export const agentConfig = {
   delay: parseInt(process.env.DELAY || '1000', 10) || 1000,
   packagePath: process.env.PACKAGE_PATH ?? './packages',
   metadata: {
-    host: process.env.METADATA_HOST,
+    host: process.env.METADATA_URL,
     timeout: parseInt(process.env.METADATA_TIMEOUT || '3000', 10) || 3000,
   } as MetadataConfigType,
-  webhook: process.env.WEBHOOK_HOST
+  webhook: process.env.WEBHOOK_URL
     ? ({
-        host: process.env.WEBHOOK_HOST,
+        host: process.env.WEBHOOK_URL,
         timeout: parseInt(process.env.WEBHOOK_TIMEOUT || '3000', 10) || 3000,
       } as WebhookConfigType)
     : undefined,

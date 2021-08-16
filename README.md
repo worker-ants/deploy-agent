@@ -16,6 +16,23 @@ sync local revision using metadata server
 - packages: `packages/*`
   - @see: `packages-example/*`
 
+### .env example
+```.dotenv
+# agent
+SERVER_NAME="TEST_SERVER-1"                 # [optional] server name (default: host name)
+CONCURRENCY="5"                             # [optional] deploy worker count (default: 5)
+DELAY="1000"                                # [optional] delay after deploy process (default: 1000)
+PACKAGE_PATH="./packages"                   # [optional] package config path (default: ./packages)
+
+# metadata
+METADATA_URL="http://localhost:80/metadata" # [required] metadata URL (required)
+METADATA_TIMEOUT="3000"                     # [required] metadata request timeout (required)
+
+# webhook
+WEBHOOK_URL="http://localhost:80/webhook"   # [optional] webhook URL (optional)
+WEBHOOK_TIMEOUT="3000"                      # [optional] webhook request timeout (optional)
+```
+
 ## deploy types
 - git
   - git reset --hard ${commitHash}
