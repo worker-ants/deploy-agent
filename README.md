@@ -10,9 +10,11 @@ sync local revision using metadata server
   - k8s: kubectl with default credential
 
 ## configure
-- agent env: see `src/agent.config.ts`
-- packages: set `packages/*`
-  - example: `packages-example/*`
+- agent env: `.env`
+  - @see `.env.example` 
+  - @see `src/agent.config.ts`
+- packages: `packages/*`
+  - @see: `packages-example/*`
 
 ## deploy types
 - git
