@@ -20,6 +20,21 @@ sync local revision using metadata server
 - k8s
   - kubectl set image ... ${image}:{tag}
 
+## metadata
+- method: GET
+- path: `http(s)://${HOST}/${PATH}/${project}/${branch}`
+- response body: json
+
+### response body example
+```json
+{
+  "label": "test package 1",
+  "project": "test project",
+  "branch": "test-branch",
+  "revision": "test2hash"
+}
+```
+
 ## webhook
 - method: POST
 - body: `src/types/WebhookData.type.ts`

@@ -6,10 +6,10 @@ export function exec(command: string): string {
       .execSync(command, { encoding: 'utf8' })
       .replace(/\n$/, '');
 
-    console.debug(command, executed);
+    console.debug({ command, executed });
     return executed;
   } catch (e) {
-    console.error(command, e);
+    console.error({ command, e });
     throw e;
   }
 }

@@ -3,6 +3,46 @@ import { GitPackageType, PackageDataType } from '../types/PackageData.type';
 import { exec } from '../lib/Process';
 
 export class Git implements ScmInterface {
+  private readonly requireVersion: number[];
+
+  constructor() {
+    this.requireVersion = '1.8.5'.split('.').map((value) => {
+      return parseInt(value, 10);
+    });
+    this.checkVersion();
+  }
+
+  /**
+   * required version: 1.8.5 higher
+   */
+  checkVersion() {
+    const matches = exec(`git --version`).match(/git version ([.\d]+)/i);
+    if (matches === null) throw new Error('check failed: git version');
+
+    const requireVersion = this.requireVersion;
+    const currentVersion: number[] = matches[1].split('.').map((value) => {
+      return parseInt(value, 10);
+    });
+
+    let isHigher = false;
+    requireVersion[requireVersion.length - 1]--;
+
+    for (let i = 0; i < currentVersion.length; i++) {
+      requireVersion[i] = requireVersion[i] ?? 0;
+      if (currentVersion[i] > requireVersion[i]) {
+        isHigher = true;
+        break;
+      }
+    }
+
+    if (!isHigher)
+      throw new Error(
+        `lower version (current: ${currentVersion.join(
+          '.',
+        )} / require: ${requireVersion.join('.')})`,
+      );
+  }
+
   async getRevision(packageData: PackageDataType): Promise<string> {
     const deployTarget: GitPackageType = Git.deployTarget(packageData);
 
