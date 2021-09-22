@@ -6,7 +6,6 @@ export async function getPackages(
 ): Promise<PackageDataType[]> {
   const files: Array<string> = await readdir(packagePath);
   const packages: PackageDataType[] = [];
-
   const promises = files.map(async (file) => {
     try {
       if (file.match(/\.json$/i) === null) return;
@@ -28,7 +27,7 @@ export async function getPackages(
     console.log(e);
   });
 
-  if (!packages) {
+  if (packages.length < 1) {
     throw new Error('packages is empty');
   }
 
